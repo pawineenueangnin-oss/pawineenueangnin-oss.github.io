@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#FBF6EC">
+<meta name="description" content="Zoomrow: Arrow Escape — แตะลูกศรหนีกระดาน เกมพัซเซิลจาก P-Prece Studio">
+<title>Zoomrow: แตะลูกศรหนีกระดาน</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="img/icon-192.png">
+<link rel="apple-touch-icon" href="img/icon-192.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- Splash -->
+  <section id="splash" class="screen active">
+    <div class="splash-inner">
+      <img class="studio-logo" src="img/studio.png" alt="P-Prece Studio">
+      <div class="studio-name">P-Prece Studio</div>
+      <div class="studio-sub" data-i18n="presents">นำเสนอ</div>
+      <div class="loadbar"><i id="loadfill"></i></div>
+    </div>
+  </section>
+
+  <!-- Menu -->
+  <section id="menu" class="screen">
+    <div class="menu-top">
+      <button class="icon-btn" id="menuSettings" aria-label="settings"><svg viewBox="0 0 24 24"><path d="M12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm8.2-2.5.1-1-.1-1 2-1.6-2-3.4-2.4 1a7.8 7.8 0 0 0-1.7-1L15.8 3h-4l-.4 2.6a7.8 7.8 0 0 0-1.7 1l-2.4-1-2 3.4 2 1.6-.1 1 .1 1-2 1.6 2 3.4 2.4-1a7.8 7.8 0 0 0 1.7 1l.4 2.6h4l.4-2.6a7.8 7.8 0 0 0 1.7-1l2.4 1 2-3.4-2-1.6Z"/></svg></button>
+    </div>
+    <div class="logo-wrap">
+      <canvas id="logoCanvas" width="600" height="300"></canvas>
+      <h1 class="title">Zoomrow</h1>
+      <div class="subtitle" data-i18n="subtitle">แตะลูกศรหนีกระดาน</div>
+    </div>
+    <div class="menu-btns">
+      <button class="big-btn primary" id="btnPlay"><span data-i18n="play">เล่นต่อ</span><small id="playLv"></small></button>
+      <button class="big-btn" id="btnLevels" data-i18n="levels">เลือกด่าน</button>
+      <button class="big-btn" id="btnEndless"><span data-i18n="endless">โหมดไม่รู้จบ</span><small id="endlessBest"></small></button>
+    </div>
+    <div class="menu-foot"><img src="img/studio.png" alt=""><span>P-Prece Studio</span></div>
+  </section>
+
+  <!-- Level select -->
+  <section id="levels" class="screen">
+    <div class="bar">
+      <button class="icon-btn" id="lvBack" aria-label="back"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="bar-title" data-i18n="levels">เลือกด่าน</div>
+      <div class="bar-stars"><span class="star-i">★</span><b id="totalStars">0</b>/150</div>
+    </div>
+    <div id="lvGrid" class="lv-grid"></div>
+  </section>
+
+  <!-- Game -->
+  <section id="game" class="screen">
+    <div class="hud">
+      <div class="hud-row">
+        <button class="icon-btn" id="gBack" aria-label="menu"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="lv-label"><span id="lvText">ด่าน 1</span><small id="lvSub"></small></div>
+        <div class="hearts" id="hearts"></div>
+      </div>
+      <div class="hud-row tools">
+        <button class="tool" id="tHint"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.8.6 1.1 1.4 1.1 2.2h5c0-.8.3-1.6 1.1-2.2A6 6 0 0 0 12 3Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="hint">คำใบ้</span><b id="hintCount">3</b></button>
+        <button class="tool" id="tRestart"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v5h5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="restart">เริ่มใหม่</span></button>
+        <button class="tool" id="tSound"><svg viewBox="0 0 24 24" id="soundIcon"></svg><span data-i18n="sound">เสียง</span></button>
+        <button class="tool" id="tSettings"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="16" cy="7" r="2.3" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="10" cy="17" r="2.3" fill="none" stroke="currentColor" stroke-width="2.2"/></svg><span data-i18n="settings">ตั้งค่า</span></button>
+      </div>
+    </div>
+    <div class="board-wrap" id="boardWrap">
+      <canvas id="board"></canvas>
+      <div id="combo" class="combo"></div>
+      <div id="tut" class="tut hidden">
+        <div class="tut-ring"></div>
+        <svg class="tut-hand" viewBox="0 0 64 64"><path d="M26 30V12a4.5 4.5 0 0 1 9 0v14l9.5 1.6A6 6 0 0 1 49.4 34L47 50a9 9 0 0 1-8.9 7.6H30a9 9 0 0 1-7.2-3.6L13 41a4.3 4.3 0 0 1 6.5-5.6L26 41Z" fill="#fff" stroke="#2A2F45" stroke-width="3" stroke-linejoin="round"/></svg>
+      </div>
+      <div id="tutBubble" class="tut-bubble hidden" data-i18n="tut">แตะลูกศรที่ทางข้างหน้าว่าง</div>
+    </div>
+    <div class="foot">
+      <div class="left-count"><span data-i18n="left">เหลือ</span> <b id="leftCount">0</b></div>
+      <div class="zoom">
+        <button class="zbtn" id="zOut" aria-label="zoom out"><svg viewBox="0 0 24 24"><path d="M6 12h12" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/></svg></button>
+        <button class="zbtn" id="zFit" aria-label="fit"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="zbtn" id="zIn" aria-label="zoom in"><svg viewBox="0 0 24 24"><path d="M6 12h12M12 6v12" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Overlays -->
+  <div id="winOv" class="overlay">
+    <div class="card win-card">
+      <div class="win-title" data-i18n="clear">ผ่านด่าน!</div>
+      <div class="stars" id="winStars"><i>★</i><i>★</i><i>★</i></div>
+      <div class="win-msg" id="winMsg"></div>
+      <button class="big-btn primary" id="wNext" data-i18n="next">ด่านต่อไป</button>
+      <div class="row2">
+        <button class="big-btn small" id="wReplay" data-i18n="replay">เล่นอีกครั้ง</button>
+        <button class="big-btn small" id="wMenu" data-i18n="menu">เมนู</button>
+      </div>
+    </div>
+  </div>
+  <div id="loseOv" class="overlay">
+    <div class="card">
+      <div class="lose-ico">♥</div>
+      <div class="win-title" data-i18n="outHearts">หัวใจหมดแล้ว</div>
+      <div class="win-msg" data-i18n="tryAgain">ลองวางลำดับใหม่อีกครั้งนะ</div>
+      <button class="big-btn primary" id="lRetry" data-i18n="retryFree">เล่นใหม่ (ฟรี)</button>
+      <button class="big-btn small" id="lMenu" data-i18n="menu">เมนู</button>
+    </div>
+  </div>
+  <div id="setOv" class="overlay">
+    <div class="card set-card">
+      <div class="win-title" data-i18n="settings">ตั้งค่า</div>
+      <div class="set-row"><span data-i18n="sound">เสียง</span><button class="tog" id="sSound"></button></div>
+      <div class="set-row"><span data-i18n="vibrate">การสั่น</span><button class="tog" id="sVib"></button></div>
+      <div class="set-row"><span data-i18n="dark">โหมดมืด</span><button class="tog" id="sDark"></button></div>
+      <div class="set-row"><span data-i18n="language">ภาษา</span>
+        <div class="seg" id="sLang"><button data-v="th">ไทย</button><button data-v="en">EN</button></div></div>
+      <button class="big-btn small" id="sClose" data-i18n="done">เสร็จสิ้น</button>
+      <div class="ver">Zoomrow v1.0.0 · P-Prece Studio</div>
+    </div>
+  </div>
+  <canvas id="fx"></canvas>
+</div>
+<script src="js/core.js"></script>
+<script src="js/levels-data.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>
